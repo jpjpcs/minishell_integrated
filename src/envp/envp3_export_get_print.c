@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   envp4_sortlist_export_get_print.c                  :+:      :+:    :+:   */
+/*   envp3_export_get_print.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jode-jes <jode-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:28:33 by joaosilva         #+#    #+#             */
-/*   Updated: 2024/06/05 19:09:16 by jode-jes         ###   ########.fr       */
+/*   Updated: 2024/06/05 20:13:43 by jode-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,7 @@ void	env_export(t_shell *shell, char *key, char *value, int visible)
 {
 	if (!env_get_value(key, shell))                       
 		// If the key does not exist...
-		add_node_to_envp_list(shell, key, value, visible);
+		create_update_envp_lists(shell, key, value, visible);
 			// Add a new variable.
 	else if (env_get_value(key, shell) && visible)        
 		// If the key exists and is marked as visible...

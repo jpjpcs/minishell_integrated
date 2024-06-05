@@ -1,0 +1,92 @@
+==384927== Memcheck, a memory error detector
+==384927== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==384927== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==384927== Command: ./minishell
+==384927== Parent PID: 384926
+==384927== 
+==384927== 
+==384927== HEAP SUMMARY:
+==384927==     in use at exit: 205,549 bytes in 633 blocks
+==384927==   total heap usage: 4,568 allocs, 3,935 frees, 323,322 bytes allocated
+==384927== 
+==384927== 488 bytes in 1 blocks are still reachable in loss record 19 of 58
+==384927==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==384927==    by 0x4019AE: alocate_memory_to_envp_char (envp1_convert.c:107)
+==384927==    by 0x4019D4: convert_envp_to_char (envp1_convert.c:119)
+==384927==    by 0x40149F: init_shell_variables (main.c:85)
+==384927==    by 0x401366: main (main.c:113)
+==384927== 
+==384927== 808 bytes in 60 blocks are still reachable in loss record 21 of 58
+==384927==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==384927==    by 0x406D99: ft_strdup (in /home/jode-jes/Documents/42_MAC_projects/minishell_integrated/minishell)
+==384927==    by 0x401CE1: env_lstnew (envp2_create.c:42)
+==384927==    by 0x401E26: add_node_to_envp_unsorted_list (envp2_create.c:79)
+==384927==    by 0x401EAA: create_update_envp_lists (envp2_create.c:93)
+==384927==    by 0x401AE5: convert_envp_to_linked_lists (envp1_convert.c:175)
+==384927==    by 0x401496: init_shell_variables (main.c:84)
+==384927==    by 0x401366: main (main.c:113)
+==384927== 
+==384927== 808 bytes in 60 blocks are still reachable in loss record 22 of 58
+==384927==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==384927==    by 0x406D99: ft_strdup (in /home/jode-jes/Documents/42_MAC_projects/minishell_integrated/minishell)
+==384927==    by 0x401CE1: env_lstnew (envp2_create.c:42)
+==384927==    by 0x401D56: add_node_to_envp_sorted_list (envp2_create.c:55)
+==384927==    by 0x401EBE: create_update_envp_lists (envp2_create.c:94)
+==384927==    by 0x401AE5: convert_envp_to_linked_lists (envp1_convert.c:175)
+==384927==    by 0x401496: init_shell_variables (main.c:84)
+==384927==    by 0x401366: main (main.c:113)
+==384927== 
+==384927== 1,345 bytes in 60 blocks are still reachable in loss record 31 of 58
+==384927==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==384927==    by 0x406D99: ft_strdup (in /home/jode-jes/Documents/42_MAC_projects/minishell_integrated/minishell)
+==384927==    by 0x401CF4: env_lstnew (envp2_create.c:43)
+==384927==    by 0x401E26: add_node_to_envp_unsorted_list (envp2_create.c:79)
+==384927==    by 0x401EAA: create_update_envp_lists (envp2_create.c:93)
+==384927==    by 0x401AE5: convert_envp_to_linked_lists (envp1_convert.c:175)
+==384927==    by 0x401496: init_shell_variables (main.c:84)
+==384927==    by 0x401366: main (main.c:113)
+==384927== 
+==384927== 1,345 bytes in 60 blocks are still reachable in loss record 32 of 58
+==384927==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==384927==    by 0x406D99: ft_strdup (in /home/jode-jes/Documents/42_MAC_projects/minishell_integrated/minishell)
+==384927==    by 0x401CF4: env_lstnew (envp2_create.c:43)
+==384927==    by 0x401D56: add_node_to_envp_sorted_list (envp2_create.c:55)
+==384927==    by 0x401EBE: create_update_envp_lists (envp2_create.c:94)
+==384927==    by 0x401AE5: convert_envp_to_linked_lists (envp1_convert.c:175)
+==384927==    by 0x401496: init_shell_variables (main.c:84)
+==384927==    by 0x401366: main (main.c:113)
+==384927== 
+==384927== 1,920 bytes in 60 blocks are still reachable in loss record 34 of 58
+==384927==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==384927==    by 0x401CBC: env_lstnew (envp2_create.c:39)
+==384927==    by 0x401E26: add_node_to_envp_unsorted_list (envp2_create.c:79)
+==384927==    by 0x401EAA: create_update_envp_lists (envp2_create.c:93)
+==384927==    by 0x401AE5: convert_envp_to_linked_lists (envp1_convert.c:175)
+==384927==    by 0x401496: init_shell_variables (main.c:84)
+==384927==    by 0x401366: main (main.c:113)
+==384927== 
+==384927== 1,920 bytes in 60 blocks are still reachable in loss record 35 of 58
+==384927==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==384927==    by 0x401CBC: env_lstnew (envp2_create.c:39)
+==384927==    by 0x401D56: add_node_to_envp_sorted_list (envp2_create.c:55)
+==384927==    by 0x401EBE: create_update_envp_lists (envp2_create.c:94)
+==384927==    by 0x401AE5: convert_envp_to_linked_lists (envp1_convert.c:175)
+==384927==    by 0x401496: init_shell_variables (main.c:84)
+==384927==    by 0x401366: main (main.c:113)
+==384927== 
+==384927== 2,153 bytes in 60 blocks are still reachable in loss record 37 of 58
+==384927==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==384927==    by 0x406E64: ft_strjoin (in /home/jode-jes/Documents/42_MAC_projects/minishell_integrated/minishell)
+==384927==    by 0x401A2B: convert_envp_to_char (envp1_convert.c:127)
+==384927==    by 0x40149F: init_shell_variables (main.c:85)
+==384927==    by 0x401366: main (main.c:113)
+==384927== 
+==384927== LEAK SUMMARY:
+==384927==    definitely lost: 0 bytes in 0 blocks
+==384927==    indirectly lost: 0 bytes in 0 blocks
+==384927==      possibly lost: 0 bytes in 0 blocks
+==384927==    still reachable: 10,787 bytes in 421 blocks
+==384927==         suppressed: 194,762 bytes in 212 blocks
+==384927== 
+==384927== For lists of detected and suppressed errors, rerun with: -s
+==384927== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

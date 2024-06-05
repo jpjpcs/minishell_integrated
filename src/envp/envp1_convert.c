@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   envp1_create.c                                     :+:      :+:    :+:   */
+/*   envp1_convert.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jode-jes <jode-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 11:26:00 by joaosilva         #+#    #+#             */
-/*   Updated: 2024/06/05 18:58:56 by jode-jes         ###   ########.fr       */
+/*   Updated: 2024/06/05 20:25:15 by jode-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ A convert_envp_to_char é chamada no env_export e no init_shell_variables.
 A envp_sort_list é chamada no env_export e no convert_envp_to_linked_lists.
 */
 
-t_env *copy_list(t_env *env_list_unsorted) 
+/* t_env *copy_list(t_env *env_list_unsorted) 
 {
     if (!env_list_unsorted)
         return NULL;
@@ -93,7 +93,7 @@ t_env *copy_list(t_env *env_list_unsorted)
 	new_list->next = copy_list(env_list_unsorted->next);
 	return (new_list);
 }
-
+ */
 // Função para alocar memória para o char **envp_char.
 void	alocate_memory_to_envp_char(t_shell *shell)
 {
@@ -172,7 +172,7 @@ void	convert_envp_to_linked_lists(char **envp, t_shell *shell)
 	{	
 		key = ft_strtok(envp[i], "=");
 		value = ft_strtok(NULL, "=");
-		add_node_to_envp_list(shell, key, value, 1);
+		create_update_envp_lists(shell, key, value, 1);
 		i++;
 	}
 }

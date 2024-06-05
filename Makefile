@@ -6,7 +6,7 @@
 #    By: jode-jes <jode-jes@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/03 10:15:08 by wcorrea-          #+#    #+#              #
-#    Updated: 2024/06/05 11:41:01 by jode-jes         ###   ########.fr        #
+#    Updated: 2024/06/05 20:23:57 by jode-jes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,10 +14,12 @@ NAME = minishell
 
 SRC = src/main.c \
 	    src/signals.c \
-	  	src/envp/envp1_create.c \
-	  	src/envp/envp2_add_rm.c \
-	  	src/envp/envp3_clear_modify.c \
-	  	src/envp/envp4_sortlist_export_get_print.c \
+	  	src/envp/envp1_convert.c \
+	  	src/envp/envp2_create.c \
+	  	src/envp/envp3_export_get_print.c \
+	  	src/envp/envp4_mod.c \
+		src/envp/envp5_rm.c \
+		src/envp/envp6_clear.c \
 	  	src/process_line/process_line.c \
 	  	src/parser/parser.c \
 	  	src/parser/parse_cmds.c \

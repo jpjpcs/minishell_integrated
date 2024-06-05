@@ -6,7 +6,7 @@
 /*   By: jode-jes <jode-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 15:14:45 by crocha-s          #+#    #+#             */
-/*   Updated: 2024/06/05 19:09:09 by jode-jes         ###   ########.fr       */
+/*   Updated: 2024/06/05 20:29:08 by jode-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,25 +131,27 @@ typedef struct s_pipe
 int     process_line(t_shell *shell);
 int     inside_quotes(t_shell *shell);
 
-//envp1 file - create
+//envp1 file - convert
 void	convert_envp_to_linked_lists(char **envp, t_shell *shell);
 void 	convert_envp_to_char(t_shell *shell);
-t_env *copy_list(t_env *env_list_unsorted);
 
-//envp2 file - add/rm
-void	*add_node_to_envp_list(t_shell *shell, char *key, char *value, int visible);
-bool env_rm(char *key, t_shell *shell);
-void ft_envlstdelone(t_env *lst, void (*del)(void*));
+//envp2 file - add
+void	create_update_envp_lists(t_shell *shell, char *key, char *value, int visible);
 
-//envp3 file - clear/modify
-bool	env_mod(t_shell *shell, char *target, char *new_value);
-void	ft_envlstclear(t_env *lst, void (*del)(void*));
-
-//envp4 file - sort/export/get/print
-//t_env   *env_sorted_list(t_shell *shell);
+//envp3 file - export/get/print
 void	env_export(t_shell *shell, char *key, char *value, int visible);
 char	*env_get_value(char *key, t_shell *shell);
 void	envp_print(t_shell *shell);
+
+//envp4 file - modify
+bool	env_mod(t_shell *shell, char *target, char *new_value);
+
+//envp5 file - rm
+void	env_rm(char *key, t_shell *shell);
+void ft_envlstdelone(t_env *lst, void (*del)(void*));
+
+//envp6 file - clear
+void	ft_envlstclear(t_env *lst, void (*del)(void *));
 
 //Parser
 t_cmd	*exec_cmd(void);

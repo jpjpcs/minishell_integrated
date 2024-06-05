@@ -1,30 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   envp3_clear_modify.c                               :+:      :+:    :+:   */
+/*   envp4_mod.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jode-jes <jode-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/02 18:07:07 by joaosilva         #+#    #+#             */
-/*   Updated: 2024/06/05 12:48:21 by jode-jes         ###   ########.fr       */
+/*   Created: 2024/06/05 20:17:37 by jode-jes          #+#    #+#             */
+/*   Updated: 2024/06/05 20:18:38 by jode-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	ft_envlstclear(t_env *lst, void (*del)(void *))
-{
-	t_env	*tmp;
-
-	if (!lst || !del)
-		return ;
-	while (lst)
-	{
-		tmp = (lst)->next;
-		ft_envlstdelone(lst, del);
-		lst = tmp;
-	}
-}
 bool	env_mod_sorted_list(t_shell *shell, char *target, char *new_value)
 {
 	t_env	*tmp_sorted;
