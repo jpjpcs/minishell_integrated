@@ -6,7 +6,7 @@
 /*   By: jode-jes <jode-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 02:29:21 by joaosilva         #+#    #+#             */
-/*   Updated: 2024/06/05 16:44:55 by jode-jes         ###   ########.fr       */
+/*   Updated: 2024/06/05 18:52:57 by jode-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,33 @@ t_env	*env_lstnew(char *key, char *value, int visible)
 	return (new);
 }
 
-// Função semelhante à lstadd_back,
-//	para adicionar um novo nó ao final da lista 
-// ligada de variáveis de ambiente.
-t_env	*add_node_to_envp_list(t_shell *shell, char *key, char *value,
+void	add_node_to_envp_sorted_list(t_shell *shell, char *key, char *value,
+		int visible)
+{
+	t_env *new_node;
+	t_env **current;
+	t_env **last;
+	
+    new_node = env_lstnew(key, value, visible);
+    if (!new_node)
+        return NULL;
+	current = &shell->env_list_sorted;
+	while (*current)
+	{
+		if(ft_strcmp(new_node->key, *current) < 0)
+		{
+			new_node->next = *current;
+			*current = &new_node;
+			break ;
+		}
+		else
+			current = &(*current)->next;
+	}
+	if (!shell->env_list_sorted)
+		shell->env_list_sorted = new_node;
+}
+
+void	add_node_to_envp_unsorted_list(t_shell *shell, char *key, char *value,
 		int visible)
 {
 	t_env *new_node;
@@ -101,14 +124,18 @@ t_env	*add_node_to_envp_list(t_shell *shell, char *key, char *value,
         return NULL;
     if (env_lstadd_back(&shell->env_list_unsorted, new_node))
         shell->envp_size++;
-
-    // Libere a lista antiga antes de copiar e ordenar a nova lista
-    if (shell->env_list_sorted)
-        ft_envlstclear(shell->env_list_sorted, free);
-
-    shell->env_list_sorted = copy_list(shell->env_list_unsorted);
-    shell->env_list_sorted = env_sorted_list(shell);
     convert_envp_to_char(shell);
-
     return shell->env_list_unsorted;
 }
+
+// Função semelhante à lstadd_back,
+//	para adicionar um novo nó ao final da lista 
+// ligada de variáveis de ambiente.
+void	add_node_to_envp_list(t_shell *shell, char *key, char *value,
+		int visible)
+{
+	add_node_to_envp_unsorted_list(shell, key, value,visible);
+	add_node_to_envp_sorted_list(shell, key, value,visible);
+
+}
+

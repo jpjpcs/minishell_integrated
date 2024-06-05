@@ -6,7 +6,7 @@
 /*   By: jode-jes <jode-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 15:14:45 by crocha-s          #+#    #+#             */
-/*   Updated: 2024/06/05 14:52:40 by jode-jes         ###   ########.fr       */
+/*   Updated: 2024/06/05 19:09:09 by jode-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ void 	convert_envp_to_char(t_shell *shell);
 t_env *copy_list(t_env *env_list_unsorted);
 
 //envp2 file - add/rm
-t_env 	*add_node_to_envp_list(t_shell *shell, char *key, char *value, int visible);
+void	*add_node_to_envp_list(t_shell *shell, char *key, char *value, int visible);
 bool env_rm(char *key, t_shell *shell);
 void ft_envlstdelone(t_env *lst, void (*del)(void*));
 
@@ -146,7 +146,7 @@ bool	env_mod(t_shell *shell, char *target, char *new_value);
 void	ft_envlstclear(t_env *lst, void (*del)(void*));
 
 //envp4 file - sort/export/get/print
-t_env   *env_sorted_list(t_shell *shell);
+//t_env   *env_sorted_list(t_shell *shell);
 void	env_export(t_shell *shell, char *key, char *value, int visible);
 char	*env_get_value(char *key, t_shell *shell);
 void	envp_print(t_shell *shell);

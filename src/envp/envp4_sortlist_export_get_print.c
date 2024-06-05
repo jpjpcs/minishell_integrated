@@ -6,7 +6,7 @@
 /*   By: jode-jes <jode-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:28:33 by joaosilva         #+#    #+#             */
-/*   Updated: 2024/06/05 15:17:25 by jode-jes         ###   ########.fr       */
+/*   Updated: 2024/06/05 19:09:16 by jode-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,7 +209,7 @@ void	env_export(t_shell *shell, char *key, char *value, int visible)
 	return (tmp_lst);
 } */
 
-t_env *env_sorted_list(t_shell *shell)
+/* t_env *env_sorted_list(t_shell *shell)
 {
     t_env *tmp;
     t_env **current;
@@ -233,4 +233,4 @@ t_env *env_sorted_list(t_shell *shell)
     }
     shell->env_list_sorted = head; // Atualize a lista ordenada no shell
     return shell->env_list_sorted;
-}
+} */

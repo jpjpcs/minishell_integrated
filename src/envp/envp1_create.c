@@ -6,7 +6,7 @@
 /*   By: jode-jes <jode-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 11:26:00 by joaosilva         #+#    #+#             */
-/*   Updated: 2024/06/05 15:02:23 by jode-jes         ###   ########.fr       */
+/*   Updated: 2024/06/05 18:58:56 by jode-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,19 +166,13 @@ void	convert_envp_to_linked_lists(char **envp, t_shell *shell)
 	int		i;
 	char	*key;
 	char	*value;
-	//t_env *copied_list;
-
-
+	
 	i = 0;
 	while (envp[i])
 	{	
 		key = ft_strtok(envp[i], "=");
 		value = ft_strtok(NULL, "=");
-		shell->env_list_unsorted = add_node_to_envp_list(shell, key, value, 1);
+		add_node_to_envp_list(shell, key, value, 1);
 		i++;
 	}
-	/* copied_list = copy_list(shell->env_list_unsorted);
-	shell->env_list_sorted = copied_list;
-	ft_envlstclear(copied_list, free);
-	shell->env_list_sorted = env_sorted_list(shell); */
 }

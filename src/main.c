@@ -6,7 +6,7 @@
 /*   By: jode-jes <jode-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 17:07:27 by joaosilva         #+#    #+#             */
-/*   Updated: 2024/06/05 14:22:43 by jode-jes         ###   ########.fr       */
+/*   Updated: 2024/06/05 19:08:06 by jode-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,16 @@ static int	init_shell_variables(t_shell *shell, char **envp)
 	*shell = (t_shell){0};
 	convert_envp_to_linked_lists(envp, shell);
 	convert_envp_to_char(shell);
+	while(shell->env_list_unsorted)
+	{
+		printf("key: %s = %s\n", shell->env_list_unsorted->key, shell->env_list_unsorted->value);
+		shell->env_list_unsorted = shell->env_list_unsorted->next;
+	}
+	while(shell->env_list_sorted)
+	{
+		printf("key: %s = %s\n", shell->env_list_sorted->key, shell->env_list_sorted->value);
+		shell->env_list_sorted = shell->env_list_sorted->next;
+	}
 	return (1);
 }
 
