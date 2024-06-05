@@ -6,7 +6,7 @@
 /*   By: jode-jes <jode-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 11:26:00 by joaosilva         #+#    #+#             */
-/*   Updated: 2024/06/05 11:56:14 by jode-jes         ###   ########.fr       */
+/*   Updated: 2024/06/05 15:02:23 by jode-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,19 +166,19 @@ void	convert_envp_to_linked_lists(char **envp, t_shell *shell)
 	int		i;
 	char	*key;
 	char	*value;
+	//t_env *copied_list;
+
 
 	i = 0;
 	while (envp[i])
 	{	
-		printf("envp[i]=%s\n", envp[i]);
 		key = ft_strtok(envp[i], "=");
-		printf("key=%s\n", key);
 		value = ft_strtok(NULL, "=");
-		printf("value=%s\n\n", value);
 		shell->env_list_unsorted = add_node_to_envp_list(shell, key, value, 1);
-		//printf("unsorted=%p\n", (void *)shell->env_list_unsorted);
 		i++;
 	}
-	shell->env_list_sorted = copy_list(shell->env_list_unsorted); // Crie uma cópia da lista original
-	shell->env_list_sorted = env_sorted_list(shell);
+	/* copied_list = copy_list(shell->env_list_unsorted);
+	shell->env_list_sorted = copied_list;
+	ft_envlstclear(copied_list, free);
+	shell->env_list_sorted = env_sorted_list(shell); */
 }

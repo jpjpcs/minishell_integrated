@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp4_sortlist_export_get_print.c                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaosilva <joaosilva@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jode-jes <jode-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:28:33 by joaosilva         #+#    #+#             */
-/*   Updated: 2024/05/31 16:12:24 by joaosilva        ###   ########.fr       */
+/*   Updated: 2024/06/05 15:17:25 by jode-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,47 +209,28 @@ void	env_export(t_shell *shell, char *key, char *value, int visible)
 	return (tmp_lst);
 } */
 
-t_env *swap_nodes(t_env *dummy, t_env **env_list_sorted, t_env **tmp_lst)
-{
-    if (*env_list_sorted == *tmp_lst)
-    {
-        *tmp_lst = (*env_list_sorted)->next;
-        (*env_list_sorted)->next = (*tmp_lst)->next;
-        (*tmp_lst)->next = *env_list_sorted;
-        dummy = *tmp_lst;
-    }
-    else
-    {
-        *env_list_sorted = (*env_list_sorted)->next;
-        dummy->next->next = (*env_list_sorted)->next;
-        (*env_list_sorted)->next = dummy->next;
-        dummy->next = *env_list_sorted;
-        *env_list_sorted = *tmp_lst;
-    }
-    return dummy;
-}
-
 t_env *env_sorted_list(t_shell *shell)
 {
-    t_env *tmp_lst = NULL;
-    t_env *dummy = NULL;
+    t_env *tmp;
+    t_env **current;
+    t_env *head = shell->env_list_sorted; // Use um ponteiro para a cabeça da lista
 
-    if (!shell->env_list_sorted)
-        return (NULL);
-    tmp_lst = shell->env_list_sorted;
-    dummy = shell->env_list_sorted;
-
-    while (shell->env_list_sorted && shell->env_list_sorted->next)
+    current = &head; // Trabalhe com a cabeça da lista
+    while (*current && (*current)->next)
     {
-        if (ft_strcmp(shell->env_list_sorted->key, shell->env_list_sorted->next->key) > 0)
+        if (ft_strcmp((*current)->key, (*current)->next->key) > 0)
         {
-            dummy = swap_nodes(dummy, &(shell->env_list_sorted), &tmp_lst);
+            tmp = (*current)->next;
+            (*current)->next = tmp->next;
+            tmp->next = *current;
+            *current = tmp;
+            current = &head; // Reinicie o ponteiro para a cabeça da lista
         }
         else
         {
-            dummy = shell->env_list_sorted;
-            shell->env_list_sorted = shell->env_list_sorted->next;
+            current = &(*current)->next;
         }
     }
-    return (tmp_lst);
+    shell->env_list_sorted = head; // Atualize a lista ordenada no shell
+    return shell->env_list_sorted;
 }
