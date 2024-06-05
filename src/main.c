@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jode-jes <jode-jes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: joaosilva <joaosilva@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 17:07:27 by joaosilva         #+#    #+#             */
-/*   Updated: 2024/06/05 20:31:31 by jode-jes         ###   ########.fr       */
+/*   Updated: 2024/06/05 23:42:16 by joaosilva        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,7 @@ static char	*get_prompt(t_shell *shell)
 	}
 	shell->line = readline(shell->prompt);
 	free(shell->prompt);
-	if (!shell->line)
-	{
-		perror("Error reading user input");
-		return (NULL);
-	}
-	else if (ft_strnstr(shell->line, "exit", ft_strlen(shell->line)))
-		exit(0);
-	else
-		return (shell->line);
+	return (shell->line);
 }
 
 static int	to_run(t_shell *shell)
