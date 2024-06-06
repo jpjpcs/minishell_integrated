@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_line.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jode-jes <jode-jes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: joaosilva <joaosilva@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 11:19:59 by joaosilva         #+#    #+#             */
-/*   Updated: 2024/06/05 11:36:55 by jode-jes         ###   ########.fr       */
+/*   Updated: 2024/06/06 22:03:29 by joaosilva        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ TRATADO NO FICHEIRO DO COMANDO EXECUTÁVEL: 1.2, 1.3, 2.3, 3.1, 3.2, 3.3, 4.3,
 	... erro porque o comando não é válido/não existe).
 
 	2- Syntax do comando - espaços:
-***************** TRATADO NESTE FICHEIRO ***********************
-	2.1 ---------> função process_line através da strtrim para strtrim_line <--------
+***************** TRATADO NESTE FICHEIRO **********
+	2.1 ----> função process_line através da strtrim para strtrim_line <----
 	2.1 - O comando pode conter um ou mais espaços no início e/ou fim.
 		... (exemplo: "   echo main  "). Contudo estes devem ser tratados
 		... antes de serem passados para o run_cmd (a função que o executa).
@@ -152,10 +152,10 @@ O meio depende do comando a ser executado. Contudo, quer pipe,
 		3.1 - Correr isoladamente/sozinho (dentro ou fora de aspas), isto é,
 		... NÃO TER um argumento (com algumas excepções como o grep, que indica
 		... como o devemos usar numa msg lançada pela shell:
-		... usage: grep [-abcDEFGHhIiJLlmnOoqRSsUVvwxZ] [-A num] [-B num] [-C[num]]
-		[-e pattern] [-f file] [--binary-files=value] [--color=when]
-		[--context[=num]] [--directories=action] [--label] [--line-buffered]
-		[--null] [pattern] [file ...])
+		... usage: grep [-abcDEFGHhIiJLlmnOoqRSsUVvwxZ] [-A num]
+		[-B num] [-C[num]][-e pattern] [-f file] [--binary-files=value]
+		[--color=when] [--context[=num]] [--directories=action] [--label]
+		[--line-buffered][--null] [pattern] [file ...])
 		3.2 - ter um ou mais argumentos (exemplo: echo main main2 main3
 			- 3 argumentos
 		... ou echo main main 2 main3 - 4 argumentos.
@@ -263,11 +263,12 @@ O meio depende do comando a ser executado. Contudo, quer pipe,
 			- antes do > só podem vir os comandos ou os sub-comandos
 			... ou os nomes dos ficheiros, senão dá erro.
 			... exemplo: deverá ser assim cat < eof | grep main > eof1, e não
-			... assim: asd >eof1. Este dá erro de  "-bash: asd: command not found".
+			... assim: asd >eof1. Este dá erro de
+			"-bash: asd: command not found".
 			... Contudo, e apesar de dar erro,
 				reescreve no eof1 apagando o conteudo
-			... que constava neste anteriormente. qd fazemos cat eof1 o ficheiro está
-			... limpo, mesmo que dantes tivesse lá algum conteúdo.
+			... que constava neste anteriormente. qd fazemos cat eof1 o
+			ficheiro está limpo, mesmo que dantes tivesse lá algum conteúdo.
 			6.4,2 - depois tem de vir obrigatoriamente o nome do ficheiro,
 			...senão dá erro:
 			... "-bash: syntax error near unexpected token `newline'"
@@ -326,7 +327,8 @@ Haverão algumas exceções como:
 2 - o tratamento do operador pipe | ou redirection <> heredoc << ou append >>,
 ... que serão tratados mesmo estando no "meio" da linha de comando.
 ... Mesmo no meio aquando de não terem estes operadores têm de ter
-... um espaço entre o operador e os seus argumentos (exemplo: cat <file1|grep main
+... um espaço entre o operador e os seus argumentos (exemplo:
+... cat <file1|grep main
 ... tem de ser igual a cat < file1 | grep main) (alínea 2.2 através
 ... da função insert_nullchar presente na função process_line)
 3 - Além disso, têm de estar fora de aspas para que tal
@@ -339,10 +341,12 @@ Haverão algumas exceções como:
 	5.1 - Resumindo, "-bash: echomain: command not found" dá quando
 	... o comando não é válido. E qd não é válido? qd é interpretado
 	... e se verifica q não existe no sistema nem um um built-in.
-	... O facto de não ter espaço entre ele e o argumento (dentro de aspas ou não).
+	... O facto de não ter espaço entre ele e o argumento (dentro
+	... de aspas ou não).
 	5.2
-		- "-bash: syntax error near unexpected token `|'" acontece quando o pipe não
-	...tem argumento antes ou dps. Por exemplo se pipe estiver no início do comando.
+		- "-bash: syntax error near unexpected token `|'"
+		... acontece quando o pipe não tem argumento antes ou dps.
+		...Por exemplo se pipe estiver no início do comando.
 	...Acontece tb qd o pipe não tem comandos antes ou a seguir.
 	...No final não dá esse erro. Abre a > e espera que o user
 	...introduza um comando válido (caso contrário dá erro).
@@ -363,41 +367,37 @@ Haverão algumas exceções como:
 
 #include "../../include/minishell.h"
 
-static void	insert_space(t_shell *shell)
+// Função para inserir espaços entre os operadores e os argumentos.
+static void	insert_space(t_shell *shell, char *tmp)
 {
-	char	*tmp;
-	int		quote;
+	int	quote;
 
 	quote = 0;
-	tmp = shell->line; 
-	
-	while (*tmp)
+	while (*(++tmp))
 	{
-		if (*tmp == '"' || *tmp == '\'')
-		{
-			if (quote == 0)
-				quote = *tmp;
-			else if (quote == *tmp)
-				quote = 0;
-		}
+		if (!quote && (*tmp == '"' || *tmp == '\''))
+			quote = *tmp;
+		else if (quote == *tmp)
+			quote = 0;
 		if (ft_strchr(OPERATORS, *tmp) && !quote)
 		{
 			if (tmp != shell->line && !ft_strchr(" |><", *(tmp - 1)))
 			{
-				if (expand_line(" ", tmp - shell->line, tmp - shell->line,
+				if (expand(" ", tmp - shell->line, tmp - shell->line,
 						&shell->line))
 					tmp = shell->line - 1;
 			}
 			else if (!ft_strchr(" |><", *(tmp + 1)))
-				if (expand_line(" ", tmp - shell->line + 1, tmp - shell->line
-						+ 1, &shell->line))
+				if (expand(" ", tmp - shell->line + 1, tmp - shell->line + 1,
+						&shell->line))
 					tmp = shell->line - 1;
 		}
-		tmp++;
 	}
 	shell->line_len = ft_strlen(shell->line);
 }
-void insert_nullchar(t_shell *shell)
+
+// Função para inserir o carater nulo.
+void	insert_nullchar(t_shell *shell)
 {
 	char	*tmp;
 	int		quote;
@@ -419,59 +419,17 @@ void insert_nullchar(t_shell *shell)
 	}
 }
 
-/* // Função para alternar o status da citação e verificar se existem aspas não correspondidas
-int	inside_quotes(char *line, char *current_position)
-{
-	int	quote;
-
-	quote = 0;
-	while (*line)
-	{
-		if (*line == '"' || *line == '\'')
-		{
-			if (quote == 0)
-				quote = *line;
-					// Se a quote não existir é definida aqui como existente
-			else if (quote == *line)
-				quote = 0; // Se a quote existir é definida aqui
-		}
-		if (&line == &current_position)
-			break ;
-		line++;
-	}
-	return (quote);
-		// Retorna o status de citação atual se nenhuma das condições acima for verdadeira
-}
-
-// Função para verificar se existem pipes não correspondidos
-static int	check_pipes(t_shell *shell)
-{
-	if (*shell->line == '|')
-		return (print_error_syntax(shell, shell->line, 2));
-	if (shell->line[strlen(shell->line) - 1] == '|')
-		return (print_error(shell, "Open | not supported", NULL, 2));
-	return (0);
-}
-
-// Função para verificar erros de sintaxe
-static int	check_syntax_errors(t_shell *shell)
-{
-	if (!check_pipes(shell) && (!inside_quotes(shell->line, shell->line)))
-		// Se não houver erros de pipe e não houver citações não correspondidas
-		return (0);
-	return (1);
-} */
-
+// Função para verificar se há erros de syntax nos pipes e nas aspas.
 static int	check_syntax_errors(t_shell *shell, int dquote, int squote)
 {
-	char *tmp;
+	char	*tmp;
 
 	tmp = shell->line - 1;
 	if (*shell->line == '|')
 		return (print_error_syntax(shell, shell->line, 2));
 	if (shell->line[strlen(shell->line) - 1] == '|')
 		return (print_error(shell, "Open | not supported", NULL, 2));
-	while(*++tmp)
+	while (*++tmp)
 	{
 		if (*tmp == '"' && !squote)
 			dquote = !dquote;
@@ -482,26 +440,22 @@ static int	check_syntax_errors(t_shell *shell, int dquote, int squote)
 		return (print_error(shell, "Unmatched quotes", NULL, 2));
 	return (0);
 }
+
+// Função para processar/tratar a linha de comando.
 int	process_line(t_shell *shell)
 {
-	char *tmp;
+	char	*tmp;
 
-	shell->status = CONTINUE; // Set the shell status to CONTINUE
-	tmp = shell->line;                            
-		// ????????????? Store the pointer to the original line ENTÃO CRIAS UM FICHEIRO temp E LIBERTA-LO A SEGUIR SEM NUNCA O TERES USADO PARA NADA!!!?
+	shell->status = CONTINUE;
+	tmp = shell->line;
 	shell->line = ft_strtrim(shell->line, SPACES);
-		// ???????????? Trim leading and trailing spaces from the line. ESPACÇOS SÃO RETIRADOS NO INÍCIO E NO FIM DA STRING. E NO MEIO?
-	free(tmp);                                    
-		// Free the memory allocated for the original line
-	if (shell->line[0] == '\0')                   
-		// If the line is empty after trimming
+	free(tmp);
+	if (shell->line[0] == '\0')
 		return (0);
-	add_history(shell->line);                     
-		// É uma função da biblioteca readline que adiciona a linha ao histórico de comandos. Adds the line to the command history.
-	if (check_syntax_errors(shell, 0, 0))               
-		// Verifica se há erros de syntax nos pipes e nas aspas.
+	add_history(shell->line);
+	if (check_syntax_errors(shell, 0, 0))
 		return (0);
-	insert_space(shell);
+	insert_space(shell, shell->line - 1);
 	insert_nullchar(shell);
-	return (1); // Return 1
+	return (1);
 }

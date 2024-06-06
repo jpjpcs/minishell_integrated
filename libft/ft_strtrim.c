@@ -26,7 +26,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 		return (ft_strdup(&s1[end + 1]));
 	while (end >= 0 && ft_strchr(set, s1[end]))
 		end--;
-	c = (char *) malloc(sizeof(char) * (end - beguin + 1) + 1);
+	c = (char *)malloc(sizeof(char) * (end - beguin + 1) + 1);
 	if (!c)
 		return (NULL);
 	ft_strlcpy(c, &s1[beguin], (end - beguin + 1) + 1);

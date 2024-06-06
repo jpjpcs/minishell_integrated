@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_exec.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jode-jes <jode-jes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: joaosilva <joaosilva@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 00:23:51 by crocha-s          #+#    #+#             */
-/*   Updated: 2024/06/05 11:37:35 by jode-jes         ###   ########.fr       */
+/*   Updated: 2024/06/06 22:49:54 by joaosilva        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,17 @@ static void	check_execve_errors(t_shell *shell, char *path)
 		ft_putendl_fd(": Permission denied", STDERR_FILENO);
 	else if (!access(path, F_OK) && !access(path, X_OK) && path[0] != '.')
 		ft_putendl_fd(": Is a directory", STDERR_FILENO);
-	else if (ft_strchr(path, '/') || !env_get_value("PATH", shell))
+	else if (ft_strchr(path, '/') || !env_get("PATH", shell))
 		ft_putendl_fd(": No such file or directory", STDERR_FILENO);
 	else
 		ft_putendl_fd(": command not found", STDERR_FILENO);
-	g_exit = 127
-		- ((!access(path, F_OK) && access(path, X_OK)) || !access(path, F_OK));
+	g_exit = 127 - ((!access(path, F_OK) && access(path, X_OK)) || !access(path,
+				F_OK));
 	free(path);
 	free_exit(shell);
 }
 
-static char	*get_path(t_shell *shell, char *cmd)
+static char	*get_path(t_shell *sh, char *cmd)
 {
 	int		i;
 	char	*path;
@@ -40,9 +40,9 @@ static char	*get_path(t_shell *shell, char *cmd)
 	i = 0;
 	path = NULL;
 	path2 = NULL;
-	if (ft_strchr("/.", cmd[0]) || !env_get_value("PATH", shell) || !ft_strcmp(cmd, ""))
+	if (ft_strchr("/.", cmd[0]) || !env_get("PATH", sh) || !ft_strcmp(cmd, ""))
 		return (ft_strdup(cmd));
-	paths = ft_split(env_get_value("PATH", shell), ':');
+	paths = ft_split(env_get("PATH", sh), ':');
 	while (paths[i])
 	{
 		path = ft_strjoin(paths[i], "/");
@@ -68,12 +68,12 @@ static void	expand_argv(t_shell *shell, char **argv)
 
 	if (!argv[0])
 		return ;
-	if(ft_strchr(argv[0], '$'))
-		expanded = 1;  // Check if is there any envp to be expanded if there is an ocurrence of $
-	expand_arg(shell, &argv[0]); //Expands the envp in the first argument
-	len = ft_strlen(argv[0]);  //Gets the new lenght of the expanded arg
-	trim_arg(argv[0]); //Trims the excess of spaces on the beggining and end of the string
-	trim_quotes(argv[0], &len); //Trims quotes and updates length;
+	if (ft_strchr(argv[0], '$'))
+		expanded = 1;
+	expand_arg(shell, &argv[0]);
+	len = ft_strlen(argv[0]);
+	trim_arg(argv[0]);
+	trim_quotes(argv[0], &len);
 	i = 1;
 	tmp = argv[0];
 	while ((tmp < argv[0] + len) && i < (MAXARGS - 1))
@@ -97,26 +97,25 @@ static void	check_exit_status(void)
 		ft_putendl_fd("Floating point exception (core dumped)", STDERR_FILENO);
 }
 
-
 void	run_exec(t_shell *shell, t_exec *cmd)
 {
 	pid_t	pid;
 	char	*path;
 
 	expand_argv(shell, cmd->argv);
-	if (!cmd->argv[0])				//If the first argument is not valid then return 0
+	if (!cmd->argv[0])
 		return (g_exit = 0, (void)0);
-	if (run_builtin(shell, cmd))  // Try to use argv as an command for a bultin command, if it succeeds the builtin command will be executed
+	if (run_builtin(shell, cmd))
 		return ;
 	signal_handler(SIGCHILD);
-	pid = check_fork();   // create a fork and check if its creation was successful
-	if (pid == 0) //if it is a child process
+	pid = check_fork();
+	if (pid == 0)
 	{
-		path = get_path(shell, cmd->argv[0]); //gets the command path on the envp and validates it
-		execve(path, cmd->argv, shell->envp_char); //executes command and finishes child process
+		path = get_path(shell, cmd->argv[0]);
+		execve(path, cmd->argv, shell->envp_char);
 		check_execve_errors(shell, path);
 	}
-	waitpid(pid, &g_exit, 0); // wait for the child process to finish
+	waitpid(pid, &g_exit, 0);
 	if (WIFEXITED(g_exit))
 		g_exit = WEXITSTATUS(g_exit);
 	else if (WIFSIGNALED(g_exit))

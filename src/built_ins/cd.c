@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crocha-s <crocha-s@student.42.fr>          +#+  +:+       +#+        */
+/*   By: joaosilva <joaosilva@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 18:52:19 by crocha-s          #+#    #+#             */
-/*   Updated: 2024/05/27 16:00:59 by crocha-s         ###   ########.fr       */
+/*   Updated: 2024/06/06 23:04:24 by joaosilva        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,9 @@ static bool	cdpath(t_shell *shell, char *path)
 	char	**cdpath;
 	int		i;
 
-	if (!env_get_value("CDPATH", shell) || path[0] == '/')
+	if (!env_get("CDPATH", shell) || path[0] == '/')
 		return (false);
-	cdpath = ft_split(env_get_value("CDPATH", shell), ':');
+	cdpath = ft_split(env_get("CDPATH", shell), ':');
 	i = 0;
 	while (cdpath[i])
 	{
@@ -80,11 +80,11 @@ static void	hyphen_cd_print(t_shell *shell, char *pwd)
 {
 	char	*str;
 
-	if (pwd[0] != '~')                         // check if there is a "~" on the first pwd argument
-		ft_putendl_fd(pwd, STDOUT_FILENO);     // if there is not print pwd
+	if (pwd[0] != '~')
+		ft_putendl_fd(pwd, STDOUT_FILENO);
 	else
 	{
-		str = ft_strjoin(env_get_value("HOME", shell), &pwd[1]); 
+		str = ft_strjoin(env_get("HOME", shell), &pwd[1]);
 		ft_putendl_fd(str, STDOUT_FILENO);
 		free(str);
 	}
@@ -92,23 +92,22 @@ static void	hyphen_cd_print(t_shell *shell, char *pwd)
 
 void	ms_cd(t_shell *shell, t_exec *cmd)
 {
-	if (!cmd->argv[1] || !*cmd->argv[1])   // check if the second argument is valid
+	if (!cmd->argv[1] || !*cmd->argv[1])
 	{
-		if (!ms_chdir(shell, env_get_value("HOME", shell)))   //if chdir is not successful on obtaining the HOME name in shell envp ...
-			print_error(shell, "cd", "HOME not set", 1); // ... print error is called
+		if (!ms_chdir(shell, env_get("HOME", shell)))
+			print_error(shell, "cd", "HOME not set", 1);
 	}
-	else //if argument is valid
+	else
 	{
-		if (cmd->argv[2])  //check if there is a third argument 
-			print_error(shell, "cd", "too many arguments", 1); // if there is third argument print error is called, cd does not support arguments
-		else if (ft_strcmp(cmd->argv[1], "-") == 0)  // verifies if string compare found a "-" in the second argument. "cd -" gets the last cwd which is recorded on OLDPWD
+		if (cmd->argv[2])
+			print_error(shell, "cd", "too many arguments", 1);
+		else if (ft_strcmp(cmd->argv[1], "-") == 0)
 		{
-			if (!ms_chdir(shell, env_get_value("OLDPWD", shell))) // call function to change directory,if an old pwd is recorded on the envp the directory is going to be changed to it
+			if (!ms_chdir(shell, env_get("OLDPWD", shell)))
 			{
-				print_error(shell, "cd", "OLDPWD not set", 1); // if its not recorded prints and error and return
-				return ;
+				print_error(shell, "cd", "OLDPWD not set", 1);
 			}
-			hyphen_cd_print(shell, env_get_value("PWD", shell)); // calls function that verifies if there is an "~" in the second argument, if its true sets HOME as cwd.
+			hyphen_cd_print(shell, env_get("PWD", shell));
 		}
 		else if (cmd->argv[1][0]
 			&& !ms_chdir(shell, cmd->argv[1]) && !cdpath(shell, cmd->argv[1]))

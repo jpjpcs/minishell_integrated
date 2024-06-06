@@ -6,7 +6,7 @@
 /*   By: joaosilva <joaosilva@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 09:58:46 by luide-so          #+#    #+#             */
-/*   Updated: 2024/05/30 22:03:41 by joaosilva        ###   ########.fr       */
+/*   Updated: 2024/06/06 22:56:03 by joaosilva        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static bool	valid_unset_var(t_shell *shell, char *arg)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	if (!ft_isalpha(arg[i]) && arg[i] != '_')

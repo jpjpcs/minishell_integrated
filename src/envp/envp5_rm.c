@@ -79,6 +79,5 @@ bool	env_rm_unsorted(char *key, t_shell *shell)
 void	env_rm(char *key, t_shell *shell)
 {
 	env_rm_unsorted(key, shell);
-    env_rm_sorted(key, shell);
+	env_rm_sorted(key, shell);
 }
-

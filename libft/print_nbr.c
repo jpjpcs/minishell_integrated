@@ -14,8 +14,8 @@
 
 static int	print_nbr_right(char *nbr, int *flags, int neg)
 {
-	int		i;
-	int		j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;
@@ -37,8 +37,8 @@ static int	print_nbr_right(char *nbr, int *flags, int neg)
 
 static int	print_nbr_left(char *nbr, int *flags, int neg)
 {
-	int		i;
-	int		j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;

@@ -6,7 +6,7 @@
 /*   By: joaosilva <joaosilva@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 17:07:27 by joaosilva         #+#    #+#             */
-/*   Updated: 2024/06/05 23:42:16 by joaosilva        ###   ########.fr       */
+/*   Updated: 2024/06/06 19:09:40 by joaosilva        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int			g_exit;
 
-// Função para obter o prompt da shell
+// Função para mostrar o prompt do shell
 static char	*show_prompt(void)
 {
 	char	*cwd;
@@ -38,6 +38,7 @@ static char	*show_prompt(void)
 	return (cwd);
 }
 
+// Função para obter o prompt do shell
 static char	*get_prompt(t_shell *shell)
 {
 	shell->prompt = show_prompt();
@@ -51,9 +52,10 @@ static char	*get_prompt(t_shell *shell)
 	return (shell->line);
 }
 
+// Função para correr o loop principal
 static int	to_run(t_shell *shell)
 {
-    signal_handler(SIGRESTORE);
+	signal_handler(SIGRESTORE);
 	shell->status = STOP;
 	shell->exec_cmd = true;
 	shell->line = get_prompt(shell);
@@ -70,30 +72,12 @@ static int	to_run(t_shell *shell)
 	return (shell->status);
 }
 
+// Função para inicializar as variáveis do shell
 static int	init_shell_variables(t_shell *shell, char **envp)
 {
 	*shell = (t_shell){0};
 	convert_envp_to_linked_lists(envp, shell);
 	convert_envp_to_char(shell);
-/* 	while(shell->env_list_unsorted)
-	{
-		printf("key: %s = %s\n", shell->env_list_unsorted->key, shell->env_list_unsorted->value);
-		shell->env_list_unsorted = shell->env_list_unsorted->next;
-	}
-	printf("\n\n\n");
-	while (*shell->envp_char)
-	{
-		printf("char %s\n", *shell->envp_char);
-		shell->envp_char++;
-	}
-	
-	printf("\n\n\n");
-	while(shell->env_list_sorted)
-	{
-		printf("key: %s = %s\n", shell->env_list_sorted->key, shell->env_list_sorted->value);
-		shell->env_list_sorted = shell->env_list_sorted->next;
-	} */
-	
 	return (1);
 }
 
@@ -117,11 +101,8 @@ int	main(int argc, char **argv, char **envp)
 	ft_envlstclear(shell.env_list_unsorted, free);
 	ft_envlstclear(shell.env_list_sorted, free);
 	if (shell.envp_char)
-		// If the shell's environment copy exists...
-		ft_free_array(shell.envp_char); // Free the memory allocated for it.
+		ft_free_array(shell.envp_char);
 	if (isatty(STDIN_FILENO))
-		// If the shell is connected to a terminal... is running in interactive mode
 		ft_putendl_fd("exit", 2);
-	// Print "exit" to the standard error output.
 	return (g_exit);
 }

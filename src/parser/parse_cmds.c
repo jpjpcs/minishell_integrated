@@ -3,34 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cmds.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crocha-s <crocha-s@student.42.fr>          +#+  +:+       +#+        */
+/*   By: joaosilva <joaosilva@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/06 12:48:55 by joaosilva         #+#    #+#             */
-/*   Updated: 2024/06/03 18:15:28 by crocha-s         ###   ########.fr       */
+/*   Created: 2024/06/06 19:10:56 by joaosilva         #+#    #+#             */
+/*   Updated: 2024/06/06 22:11:40 by joaosilva        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+// Token é o argumento. O argumento é o que vem depois do operador de 
+//redirecionamento "<" ou ">".
+// O while verifica se o próximo token é "<" ou ">".
+// O type atribui um toke type que pode ser "<", ">", 
+// "<<, ">>", "|", ou "a".
+// O segundo if verifica se o token não for argumento ou se o 
+//token for "<" e o próximo token for ">".
 static t_cmd	*parseredir(t_cmd *cmd, t_shell *shell)
 {
-	int	type;
-	char *token;
-	
-		// Token é o argumento. O argumento é o que vem depois do operador de redirecionamento "<" ou ">".
-	while (peek(shell, "<>")) // Verifica se o próximo token é "<" ou ">".
+	int		type;
+	char	*token;
+
+	while (peek(shell, "<>"))
 	{
-		type = gettoken(shell, NULL); // Obtém o tipo do token. se é "<" ou ">".
+		type = gettoken(shell, NULL);
 		if (gettoken(shell, &token) != 'a')
-			// Se o próximo token não for argumento.
 		{
 			if (type != '<' || (type == '<' && ft_strcmp(token, ">")))
-				// Se o tipo for diferente de < ou se o tipo for < e o token for diferente de ">".
 				return (print_error_syntax(shell, token, 2), cmd);
-			else 
-				if (gettoken(shell, &token) != 'a')
-				// Se o próximo token não for argumento.
-					return (print_error_syntax(shell, token, 2), cmd);
+			else if (gettoken(shell, &token) != 'a')
+				return (print_error_syntax(shell, token, 2), cmd);
 		}
 		if (type == '<')
 			cmd = redir_cmd(cmd, token, O_RDONLY, 0);
@@ -71,8 +73,7 @@ static t_cmd	*parseexec(t_shell *shell)
 
 t_cmd	*parsepipe(t_shell *shell)
 {
-	t_cmd *cmd;
-	
+	t_cmd	*cmd;
 
 	if (peek(shell, "|") && shell->status == CONTINUE)
 		return (print_error_syntax(shell, shell->ps, 2), NULL);

@@ -52,6 +52,6 @@ int	print_pointer(unsigned long long addr, int *flags)
 	}
 	ft_memcpy(hex, "0x", 2);
 	i = print_str(hex, flags);
-	free (hex);
+	free(hex);
 	return (i);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crocha-s <crocha-s@student.42.fr>          +#+  +:+       +#+        */
+/*   By: joaosilva <joaosilva@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 09:56:55 by luide-so          #+#    #+#             */
-/*   Updated: 2024/06/03 10:34:05 by crocha-s         ###   ########.fr       */
+/*   Updated: 2024/06/06 22:56:19 by joaosilva        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ms_env(t_shell *shell, t_exec *cmd)
 		print_error(shell, "env", "too many arguments", 2);
 	else
 	{
-		if (env_get_value("PATH", shell))
+		if (env_get("PATH", shell))
 			envp_print(shell);
 		else
 			print_error(shell, cmd->argv[0], "No such file or directory", 127);

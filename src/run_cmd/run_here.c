@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_here.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crocha-s <crocha-s@student.42.fr>          +#+  +:+       +#+        */
+/*   By: joaosilva <joaosilva@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:42:13 by luide-so          #+#    #+#             */
-/*   Updated: 2024/06/01 20:55:48 by crocha-s         ###   ########.fr       */
+/*   Updated: 2024/06/06 22:52:08 by joaosilva        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	expand_heredoc(t_shell *shell, char **line)
 		if ((*line)[i] == '$' && (*line)[i + 1] == '?')
 		{
 			tmp = ft_itoa(g_exit);
-			expand_line(tmp, i, i + 2, line);
+			expand(tmp, i, i + 2, line);
 			free(tmp);
 		}
 		else if ((*line)[i] == '$' && ft_isalpha((*line)[i + 1]))
@@ -33,7 +33,7 @@ static void	expand_heredoc(t_shell *shell, char **line)
 			while (ft_isalnum((*line)[j]) || (*line)[j] == '_')
 				j++;
 			tmp = ft_substr(*line, i + 1, j - i - 1);
-			expand_line(env_get_value(tmp, shell), i, j, line);
+			expand(env_get(tmp, shell), i, j, line);
 			free(tmp);
 		}
 		i++;

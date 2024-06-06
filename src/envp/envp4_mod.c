@@ -15,9 +15,8 @@
 bool	env_mod_sorted_list(t_shell *shell, char *target, char *new_value)
 {
 	t_env	*tmp_sorted;
-	
-	tmp_sorted = shell->env_list_sorted;
 
+	tmp_sorted = shell->env_list_sorted;
 	while (tmp_sorted)
 	{
 		if (ft_strcmp(target, tmp_sorted->key) == 0)
@@ -35,9 +34,8 @@ bool	env_mod_sorted_list(t_shell *shell, char *target, char *new_value)
 bool	env_mod_unsorted_list(t_shell *shell, char *target, char *new_value)
 {
 	t_env	*tmp_unsorted;
-	
-	tmp_unsorted = shell->env_list_unsorted;
 
+	tmp_unsorted = shell->env_list_unsorted;
 	while (tmp_unsorted)
 	{
 		if (ft_strcmp(target, tmp_unsorted->key) == 0)
@@ -52,11 +50,9 @@ bool	env_mod_unsorted_list(t_shell *shell, char *target, char *new_value)
 	return (false);
 }
 
-
 bool	env_mod(t_shell *shell, char *target, char *new_value)
 {
 	env_mod_unsorted_list(shell, target, new_value);
 	env_mod_sorted_list(shell, target, new_value);
-
 	return (false);
 }

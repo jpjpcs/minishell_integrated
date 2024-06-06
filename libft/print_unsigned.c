@@ -14,8 +14,8 @@
 
 static int	print_nbr_right(char *nbr, int *flags)
 {
-	int		i;
-	int		j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;
@@ -31,8 +31,8 @@ static int	print_nbr_right(char *nbr, int *flags)
 
 static int	print_nbr_left(char *nbr, int *flags)
 {
-	int		i;
-	int		j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;
@@ -63,11 +63,11 @@ int	print_unsigned(unsigned int n, int *flags)
 	if (flags[6] > len)
 		flags[7] -= flags[6];
 	else
-		flags[7] -= len ;
+		flags[7] -= len;
 	if (flags[5])
 		flags[6] -= len;
 	else
-		flags[6] -= len ;
+		flags[6] -= len;
 	if (flags[3])
 		return (len + print_nbr_left(nbr, flags));
 	return (len + print_nbr_right(nbr, flags));

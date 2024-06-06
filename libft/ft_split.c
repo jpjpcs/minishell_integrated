@@ -14,9 +14,9 @@
 
 static int	count_strings(char const *s, char c)
 {
-	int		count;
-	int		i;
-	int		old_i;
+	int	count;
+	int	i;
+	int	old_i;
 
 	i = 0;
 	count = 0;

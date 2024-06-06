@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jode-jes <jode-jes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: joaosilva <joaosilva@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 23:32:58 by luide-so          #+#    #+#             */
-/*   Updated: 2024/05/27 15:34:09 by jode-jes         ###   ########.fr       */
+/*   Updated: 2024/06/06 22:33:53 by joaosilva        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	free_exec(t_exec *exec)
 	free(exec);
 	exec = NULL;
 }
+
 static void	free_redir(t_redir *redir)
 {
 	if (!redir)

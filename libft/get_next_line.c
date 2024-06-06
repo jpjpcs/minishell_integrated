@@ -21,7 +21,7 @@ static char	*ft_memmove_mod(char *buff)
 	line_len = ft_strclen(buff, '\n');
 	if (!buff[line_len] || !buff[line_len + 1])
 	{
-		free (buff);
+		free(buff);
 		return (NULL);
 	}
 	buff_len = ft_strclen(buff, '\0');
@@ -59,7 +59,7 @@ static char	*ft_strjoin_mod(char *s1, char *s2)
 	int		j;
 
 	len = ft_strclen(s1, '\0') + ft_strclen(s2, '\0');
-	c = (char *) malloc(len * sizeof(char) + 1);
+	c = (char *)malloc(len * sizeof(char) + 1);
 	if (!c)
 		return (NULL);
 	i = 0;
@@ -72,7 +72,7 @@ static char	*ft_strjoin_mod(char *s1, char *s2)
 	while (s2[++j])
 		c[i + j] = s2[j];
 	c[i + j] = '\0';
-	free (s1);
+	free(s1);
 	return (c);
 }
 
@@ -97,7 +97,7 @@ static char	*get_buffer(char *buff, int fd)
 		temp[bytes] = '\0';
 		buff = ft_strjoin_mod(buff, temp);
 	}
-	free (temp);
+	free(temp);
 	return (buff);
 }
 

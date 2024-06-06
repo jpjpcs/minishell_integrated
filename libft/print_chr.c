@@ -14,7 +14,7 @@
 
 int	print_chr(char c, int *flags)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	if (flags[3])

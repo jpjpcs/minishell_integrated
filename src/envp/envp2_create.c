@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   envp2_create.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jode-jes <jode-jes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: joaosilva <joaosilva@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 02:29:21 by joaosilva         #+#    #+#             */
-/*   Updated: 2024/06/05 20:26:25 by jode-jes         ###   ########.fr       */
+/*   Updated: 2024/06/06 22:26:57 by joaosilva        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+// Função para adicionar um nó ao final da lista de envp
+// Semelhante à ft_lstadd_back do libft
 bool	env_lstadd_back(t_env **lst, t_env *new)
 {
 	t_env	*temp;
@@ -31,7 +33,7 @@ bool	env_lstadd_back(t_env **lst, t_env *new)
 }
 
 // Função para criar um nó. É semelhante à ft_lstnew,
-//mas além do valor/conteúdo, tb tem o visivel,
+// mas além do valor/conteúdo, tb tem o visivel,
 t_env	*env_lstnew(char *key, char *value, int visible)
 {
 	t_env	*new;
@@ -46,19 +48,20 @@ t_env	*env_lstnew(char *key, char *value, int visible)
 	return (new);
 }
 
+// Função para adicionar um nó à lista de envp ordenada
 void	add_node_to_envp_sorted_list(t_shell *shell, char *key, char *value,
 		int visible)
 {
-	t_env *new_node;
-	t_env **current;
-	
-    new_node = env_lstnew(key, value, visible);
-    if (!new_node)
+	t_env	*new_node;
+	t_env	**current;
+
+	new_node = env_lstnew(key, value, visible);
+	if (!new_node)
 		return ;
 	current = &shell->env_list_sorted;
 	while (*current)
 	{
-		if(ft_strcmp(new_node->key, (*current)->key) < 0)
+		if (ft_strcmp(new_node->key, (*current)->key) < 0)
 		{
 			new_node->next = *current;
 			*current = new_node;
@@ -71,27 +74,24 @@ void	add_node_to_envp_sorted_list(t_shell *shell, char *key, char *value,
 		*current = new_node;
 }
 
+// Função para adicionar um nó à lista de envp não ordenada
 void	add_node_to_envp_unsorted_list(t_shell *shell, char *key, char *value,
 		int visible)
 {
-	t_env *new_node;
+	t_env	*new_node;
 
-    new_node = env_lstnew(key, value, visible);
-    if (!new_node)
-        return ;
-    if (env_lstadd_back(&shell->env_list_unsorted, new_node))
-        shell->envp_size++;
-    convert_envp_to_char(shell);
+	new_node = env_lstnew(key, value, visible);
+	if (!new_node)
+		return ;
+	if (env_lstadd_back(&shell->env_list_unsorted, new_node))
+		shell->envp_size++;
+	convert_envp_to_char(shell);
 }
 
-// Função semelhante à lstadd_back,
-//	para adicionar um novo nó ao final da lista 
-// ligada de variáveis de ambiente.
+// Função para criar e atualizar as listas de envp
 void	create_update_envp_lists(t_shell *shell, char *key, char *value,
 		int visible)
 {
-	add_node_to_envp_unsorted_list(shell, key, value,visible);
-	add_node_to_envp_sorted_list(shell, key, value,visible);
-
+	add_node_to_envp_unsorted_list(shell, key, value, visible);
+	add_node_to_envp_sorted_list(shell, key, value, visible);
 }
-

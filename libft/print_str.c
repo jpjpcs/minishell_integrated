@@ -18,7 +18,7 @@ static int	str_left(char *s, int *flags)
 
 	i = 0;
 	ft_putstr_fd(s, 1);
-	free (s);
+	free(s);
 	while (i < flags[7])
 		i += write(1, " ", 1);
 	return (i);
@@ -32,13 +32,13 @@ static int	str_right(char *s, int *flags)
 	while (i < flags[7])
 		i += write(1, " ", 1);
 	ft_putstr_fd(s, 1);
-	free (s);
+	free(s);
 	return (i);
 }
 
 int	print_str(char *s, int *flags)
 {
-	int		len;
+	int	len;
 
 	if (flags[5] && flags[6] < 5 && !s)
 		return (print_str("", flags));

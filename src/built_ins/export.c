@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jode-jes <jode-jes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: joaosilva <joaosilva@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 09:57:30 by luide-so          #+#    #+#             */
-/*   Updated: 2024/06/05 11:22:53 by jode-jes         ###   ########.fr       */
+/*   Updated: 2024/06/06 23:04:05 by joaosilva        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ static void	print_envp_sorted(t_shell *shell, int export)
 	t_env	*tmp;
 
 	tmp = shell->env_list_sorted;
-	
 	while (tmp)
 	{
 		if (export)
@@ -39,7 +38,7 @@ static void	print_envp_sorted(t_shell *shell, int export)
 
 static bool	valid_var(t_shell *shell, char *arg)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	if (!ft_isalpha(arg[i]) && arg[i] != '_')
