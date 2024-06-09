@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: joaosilva <joaosilva@student.42.fr>        +#+  +:+       +#+         #
+#    By: crocha-s <crocha-s@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/03 10:15:08 by wcorrea-          #+#    #+#              #
-#    Updated: 2024/06/06 17:15:26 by joaosilva        ###   ########.fr        #
+#    Updated: 2024/06/08 00:11:43 by crocha-s         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,34 +47,31 @@ SRC = src/main.c \
 	 
 OBJS = ${SRC:.c=.o}
 
-CC = clang
+CC = cc
 RM = rm -f
-CFLAGS = -Wall -Wextra -Werror -g -arch x86_64 -fsanitize=address
-INCLUDE = -I include -I /usr/local/opt/readline/include -I /usr/local/Cellar/readline/8.2.10/include
-LDFLAGS = -L /usr/local/opt/readline/lib -L /usr/local/Cellar/readline/8.2.10/lib
+CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
+INCLUDE = -I include
 MAKE = make -C
 LIBFT_PATH = libft/
-LIBFT = $(LIBFT_PATH)libft.a
 LFLAGS = -L ${LIBFT_PATH} -lft -lreadline
+
 
 all:	${NAME}
 
 .c.o:
-	${CC} ${CFLAGS} ${INCLUDE} -c $< -o ${<:.c=.o}
+		${CC} ${CFLAGS} ${INCLUDE} -c $< -o ${<:.c=.o}
 
-$(LIBFT):
-	${MAKE} ${LIBFT_PATH} all
-
-$(NAME): $(LIBFT) ${OBJS}
-	${CC} ${CFLAGS} ${INCLUDE} ${OBJS} ${LDFLAGS} ${LFLAGS} -o ${NAME}
+$(NAME): ${OBJS}
+		${MAKE} ${LIBFT_PATH}
+		${CC} ${CFLAGS} ${INCLUDE} ${OBJS} ${LFLAGS} -o ${NAME}
 
 clean:
-	${MAKE} ${LIBFT_PATH} clean
-	${RM} ${OBJS}
+		${MAKE} ${LIBFT_PATH} clean
+		${RM} ${OBJS}
 
 fclean: clean
-	${MAKE} ${LIBFT_PATH} fclean
-	${RM} ${NAME}
+		${MAKE} ${LIBFT_PATH} fclean
+		${RM} ${NAME}
 
 re: fclean all
 

@@ -3,14 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   ft_puthex_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luide-so <luide-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: crocha-s <crocha-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/07 18:20:46 by luide-so          #+#    #+#             */
-/*   Updated: 2023/06/19 18:28:02 by luide-so         ###   ########.fr       */
+/*   Created: 2024/06/08 19:33:57 by crocha-s          #+#    #+#             */
+/*   Updated: 2024/06/08 19:33:59 by crocha-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-// const char *c is the base of the hex number, either 'x' or 'X'
 
 #include "libft.h"
 

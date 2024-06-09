@@ -6,7 +6,7 @@
 /*   By: joaosilva <joaosilva@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 15:14:45 by crocha-s          #+#    #+#             */
-/*   Updated: 2024/06/06 22:46:17 by joaosilva        ###   ########.fr       */
+/*   Updated: 2024/06/07 19:40:33 by joaosilva        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
-/*# include <linux/limits.h>*/
 # include <dirent.h>
 # include <errno.h>
 # include <limits.h>
@@ -88,7 +87,6 @@ typedef struct s_shell
 	t_env			*env_list_sorted;
 	t_cmd			*cmd;
 	int				status;
-	int				exec_cmd;
 	int				envp_size;
 	int				pid;
 	char			**envp_char;
@@ -168,7 +166,7 @@ void				expand_arg(t_shell *shell, char **arg);
 int					expand_free(char *key, int i, int j, char **line);
 int					expand(char *key, int i, int j, char **line);
 void				trim_quotes(char *arg, int *len);
-void				trim_arg(char *arg);
+void				arg_insert_null(char *arg);
 
 // error_frees
 int					print_error_syntax(t_shell *shell, char *msg, int exit);
@@ -184,6 +182,7 @@ void				run_cmd(t_shell *shell, t_cmd *cmd);
 void				run_exec(t_shell *shell, t_exec *cmd);
 void				run_redir(t_shell *shell, t_redir *cmd);
 void				run_pipe(t_shell *shell, t_pipe *cmd);
+void				wait_children(t_shell *shell);
 void				check(int result, char *msg, int exit);
 int					check_fork(void);
 t_cmd				*here_cmd(t_cmd *cmd, char *eof);
@@ -200,7 +199,6 @@ void				ms_unset(t_shell *shell, t_exec *cmd);
 void				ms_env(t_shell *shell, t_exec *cmd);
 void				ms_exit(t_shell *shell, t_exec *cmd);
 
-void				wait_children(t_shell *shell);
+// signals
 void				signal_handler(int sig);
-// void	close_fds_and_sig_handler(int fd[2], int sig);
 #endif

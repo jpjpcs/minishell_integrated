@@ -6,7 +6,7 @@
 /*   By: joaosilva <joaosilva@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 11:19:59 by joaosilva         #+#    #+#             */
-/*   Updated: 2024/06/06 22:03:29 by joaosilva        ###   ########.fr       */
+/*   Updated: 2024/06/07 19:32:31 by joaosilva        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -419,24 +419,34 @@ void	insert_nullchar(t_shell *shell)
 	}
 }
 
-// Função para verificar se há erros de syntax nos pipes e nas aspas.
-static int	check_syntax_errors(t_shell *shell, int dquote, int squote)
+int	check_pipes(t_shell *shell)
 {
-	char	*tmp;
-
-	tmp = shell->line - 1;
 	if (*shell->line == '|')
 		return (print_error_syntax(shell, shell->line, 2));
 	if (shell->line[strlen(shell->line) - 1] == '|')
 		return (print_error(shell, "Open | not supported", NULL, 2));
+	return (0);
+}
+
+// Função para verificar se há erros de syntax nos pipes e nas aspas.
+static int	check_quotes(t_shell *shell)
+{
+	char	*tmp;
+	int		quote;
+
+	quote = 0;
+	tmp = shell->line - 1;
 	while (*++tmp)
 	{
-		if (*tmp == '"' && !squote)
-			dquote = !dquote;
-		if (*tmp == '\'' && !dquote)
-			squote = !squote;
+		if (*tmp == '"' || *tmp == '\'')
+		{
+			if (quote == 0)
+				quote = *tmp;
+			else if (quote == *tmp)
+				quote = 0;
+		}
 	}
-	if (dquote || squote)
+	if (quote)
 		return (print_error(shell, "Unmatched quotes", NULL, 2));
 	return (0);
 }
@@ -453,7 +463,9 @@ int	process_line(t_shell *shell)
 	if (shell->line[0] == '\0')
 		return (0);
 	add_history(shell->line);
-	if (check_syntax_errors(shell, 0, 0))
+	if (check_quotes(shell))
+		return (0);
+	if (check_pipes(shell))
 		return (0);
 	insert_space(shell, shell->line - 1);
 	insert_nullchar(shell);

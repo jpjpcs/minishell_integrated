@@ -6,7 +6,7 @@
 /*   By: joaosilva <joaosilva@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 17:07:27 by joaosilva         #+#    #+#             */
-/*   Updated: 2024/06/06 19:09:40 by joaosilva        ###   ########.fr       */
+/*   Updated: 2024/06/07 18:45:28 by joaosilva        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ static int	to_run(t_shell *shell)
 {
 	signal_handler(SIGRESTORE);
 	shell->status = STOP;
-	shell->exec_cmd = true;
 	shell->line = get_prompt(shell);
 	if (shell->line && process_line(shell))
 	{
@@ -94,7 +93,7 @@ int	main(int argc, char **argv, char **envp)
 		return (0);
 	}
 	else
-		printf("\nMinishell 1.0\n");
+		printf("\nMinishell 1.0: Authors: jode-jes, crocha-s.\n");
 	while (to_run(&shell))
 		;
 	clear_history();

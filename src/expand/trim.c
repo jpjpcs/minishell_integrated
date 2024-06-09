@@ -3,29 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   trim.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaosilva <joaosilva@student.42.fr>        +#+  +:+       +#+        */
+/*   By: crocha-s <crocha-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 11:30:07 by joaosilva         #+#    #+#             */
-/*   Updated: 2024/06/06 22:31:24 by joaosilva        ###   ########.fr       */
+/*   Updated: 2024/06/08 00:12:03 by crocha-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	trim_arg(char *arg)
+void	arg_insert_null(char *arg)
 {
-	int	squote;
-	int	dquote;
+	int	quote;
 
-	dquote = 0;
-	squote = 0;
+	quote = 0;
 	while (*arg)
 	{
-		if (*arg == '"' && !squote)
-			dquote = !dquote;
-		if (*arg == '\'' && !dquote)
-			squote = !squote;
-		if (ft_strchr(SPACES, *arg) && !squote && !dquote)
+		if (*arg == '"' || (*arg == '\'' && !quote))
+			quote = *arg;
+		else if (quote == *arg)
+			quote = 0;
+		if (ft_strchr(SPACES, *arg) && !quote)
 			*arg = '\0';
 		arg++;
 	}

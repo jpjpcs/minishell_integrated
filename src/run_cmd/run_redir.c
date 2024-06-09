@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_redir.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaosilva <joaosilva@student.42.fr>        +#+  +:+       +#+        */
+/*   By: crocha-s <crocha-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/29 16:42:00 by luide-so          #+#    #+#             */
-/*   Updated: 2024/06/06 22:52:43 by joaosilva        ###   ########.fr       */
+/*   Created: 2024/06/08 19:38:07 by crocha-s          #+#    #+#             */
+/*   Updated: 2024/06/08 19:38:09 by crocha-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	expand_file(t_shell *shell, char **file)
 
 	expand_arg(shell, file);
 	len = ft_strlen(*file);
-	trim_arg(*file);
+	arg_insert_null(*file);
 	trim_quotes(*file, &len);
 	return (1);
 }

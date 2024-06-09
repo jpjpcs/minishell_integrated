@@ -6,7 +6,7 @@
 /*   By: joaosilva <joaosilva@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 00:23:51 by crocha-s          #+#    #+#             */
-/*   Updated: 2024/06/06 22:49:54 by joaosilva        ###   ########.fr       */
+/*   Updated: 2024/06/07 19:24:57 by joaosilva        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,17 +68,16 @@ static void	expand_argv(t_shell *shell, char **argv)
 
 	if (!argv[0])
 		return ;
-	if (ft_strchr(argv[0], '$'))
-		expanded = 1;
+	expanded = (ft_strchr(argv[0], '$') == 0);
 	expand_arg(shell, &argv[0]);
 	len = ft_strlen(argv[0]);
-	trim_arg(argv[0]);
+	arg_insert_null(argv[0]);
 	trim_quotes(argv[0], &len);
 	i = 1;
 	tmp = argv[0];
 	while ((tmp < argv[0] + len) && i < (MAXARGS - 1))
 	{
-		if (*tmp == '\0' && (ft_strcmp(argv[0], "printf") || i != 2))
+		if (*(tmp) == '\0' && (ft_strcmp(argv[0], "printf") || i != 2))
 			argv[i++] = tmp + 1;
 		tmp++;
 	}

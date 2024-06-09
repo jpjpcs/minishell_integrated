@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_pipe.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaosilva <joaosilva@student.42.fr>        +#+  +:+       +#+        */
+/*   By: crocha-s <crocha-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/08 17:32:04 by luide-so          #+#    #+#             */
-/*   Updated: 2024/06/06 22:51:26 by joaosilva        ###   ########.fr       */
+/*   Created: 2024/06/08 19:37:59 by crocha-s          #+#    #+#             */
+/*   Updated: 2024/06/08 19:38:01 by crocha-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	wait_children(t_shell *shell)
 static void	close_fds_and_sig_handler(int fd[2], int sig)
 {
 	if (sig)
-		// sig_handler(sig);
-		check(close(fd[0]), "close error", 127);
+		signal_handler(sig);
+	check(close(fd[0]), "close error", 127);
 	check(close(fd[1]), "close error", 127);
 }
 
