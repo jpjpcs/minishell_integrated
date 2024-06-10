@@ -6,7 +6,7 @@
 /*   By: joaosilva <joaosilva@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 00:23:51 by crocha-s          #+#    #+#             */
-/*   Updated: 2024/06/07 19:24:57 by joaosilva        ###   ########.fr       */
+/*   Updated: 2024/06/10 16:22:37 by joaosilva        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static char	*get_path(t_shell *sh, char *cmd)
 		free(path);
 		path = NULL;
 		if (!access(path2, F_OK))
-			return (path2);
+			return (ft_free_array(paths), path2);
 		free(path2);
 		path2 = NULL;
 		i++;

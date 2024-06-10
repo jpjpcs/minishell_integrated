@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   trim.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crocha-s <crocha-s@student.42.fr>          +#+  +:+       +#+        */
+/*   By: joaosilva <joaosilva@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 11:30:07 by joaosilva         #+#    #+#             */
-/*   Updated: 2024/06/08 00:12:03 by crocha-s         ###   ########.fr       */
+/*   Updated: 2024/06/09 16:16:14 by joaosilva        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	arg_insert_null(char *arg)
 	quote = 0;
 	while (*arg)
 	{
-		if (*arg == '"' || (*arg == '\'' && !quote))
+		if ((*arg == '"' || *arg == '\'') && !quote)
 			quote = *arg;
 		else if (quote == *arg)
 			quote = 0;
